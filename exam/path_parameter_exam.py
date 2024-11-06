@@ -37,5 +37,5 @@ def header(name: str, value: str, response: Response):
     return "normal body"
 
 
-# uvicorn hello:app --reload
+# uvicorn path_parameter:app --reload
 # 8000번 포트
