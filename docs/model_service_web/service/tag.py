@@ -1,5 +1,5 @@
 from datetime import datetime
-from model.tag import Tag
+from ..model.tag import Tag
 
 
 def create(tag: Tag) -> Tag:

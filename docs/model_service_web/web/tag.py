@@ -1,6 +1,6 @@
 from datetime import datetime
-from model.tag import TagIn, Tag, TagOut
-import service.tag as service
+from ..model.tag import TagIn, Tag, TagOut
+from ..service import tag as service
 from fastapi import FastAPI
 
 app = FastAPI()
