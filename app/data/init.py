@@ -2,7 +2,7 @@
 
 import os
 from pathlib import Path
-from sqlite3 import connect, Connection, Cursor
+from sqlite3 import connect, Connection, Cursor, IntegrityError
 
 conn: Connection | None = None
 curs: Cursor | None = None
@@ -11,10 +11,10 @@ curs: Cursor | None = None
 def get_db(name: str | None = None, reset: bool = False):
     """SQLite 데이터베이스 파일에 연결"""
     global conn, curs
-    
+
     if conn:
         return conn
-        
+
     if conn is None:
         if not name:
             name = os.getenv("CRYPTID_SQLITE_DB")
@@ -27,12 +27,12 @@ def get_db(name: str | None = None, reset: bool = False):
 
         conn = connect(name, check_same_thread=False)
         curs = conn.cursor()
-        
+
     if reset:
         curs.execute("DROP TABLE IF EXISTS explorer")
         curs.execute("DROP TABLE IF EXISTS creature")
         conn.commit()
-        
+
     curs.execute(
         """CREATE TABLE IF NOT EXISTS explorer (
             name TEXT PRIMARY KEY,
@@ -50,6 +50,7 @@ def get_db(name: str | None = None, reset: bool = False):
         )"""
     )
     return conn
+
 
 get_db()
 # get_db(reset=True)
