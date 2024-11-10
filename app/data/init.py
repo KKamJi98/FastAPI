@@ -1,5 +1,7 @@
-"""SQLite 데이터베이스를 초기화"""
+# TODO Review
 
+
+"""SQLite 데이터베이스를 초기화"""
 import os
 from pathlib import Path
 from sqlite3 import connect, Connection, Cursor, IntegrityError
@@ -23,7 +25,7 @@ def get_db(name: str | None = None, reset: bool = False):
                 db_dir = top_dir / "db"
                 db_dir.mkdir(exist_ok=True)
                 db_name = "cryptid.db"
-                name = str(db_dir / db_name)
+                name = str(object=db_dir / db_name)
 
         conn = connect(name, check_same_thread=False)
         curs = conn.cursor()
@@ -31,24 +33,10 @@ def get_db(name: str | None = None, reset: bool = False):
     if reset:
         curs.execute("DROP TABLE IF EXISTS explorer")
         curs.execute("DROP TABLE IF EXISTS creature")
+        curs.execute("DROP TABLE IF EXISTS user")
+        curs.execute("DROP TABLE IF EXISTS xuser")
         conn.commit()
 
-    curs.execute(
-        """CREATE TABLE IF NOT EXISTS explorer (
-            name TEXT PRIMARY KEY,
-            country TEXT,
-            description TEXT
-        )"""
-    )
-    curs.execute(
-        """CREATE TABLE IF NOT EXISTS creature (
-            name TEXT PRIMARY KEY,
-            description TEXT,
-            country TEXT,
-            area TEXT,
-            aka TEXT
-        )"""
-    )
     return conn
 
 

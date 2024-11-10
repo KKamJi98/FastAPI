@@ -1,6 +1,16 @@
+# TODO Review
 from .init import curs, conn, IntegrityError
 from app.model.explorer import Explorer
 from app.error import Missing, Duplicate
+
+
+curs.execute(
+    """CREATE TABLE IF NOT EXISTS explorer (
+            name TEXT PRIMARY KEY,
+            country TEXT,
+            description TEXT
+        )"""
+)
 
 
 def row_to_model(row: tuple) -> Explorer:

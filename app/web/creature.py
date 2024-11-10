@@ -1,9 +1,19 @@
+# Review Complete (1)
 from fastapi import APIRouter, HTTPException
 from app.model.creature import Creature
 import app.service.creature as service
 from app.error import Duplicate, Missing
 
 router = APIRouter(prefix="/creature")
+
+
+@router.post(path="")
+@router.post("/")
+def create(creature: Creature) -> Creature:
+    try:
+        return service.create(creature)
+    except Duplicate as exc:
+        raise HTTPException(status_code=404, detail=exc.msg)
 
 
 @router.get("")
@@ -18,15 +28,6 @@ def get_one(name: str) -> Creature:
     try:
         return service.get_one(name)
     except Missing as exc:
-        raise HTTPException(status_code=404, detail=exc.msg)
-
-
-@router.post("")
-@router.post("/")
-def create(creature: Creature) -> Creature:
-    try:
-        return service.create(creature)
-    except Duplicate as exc:
         raise HTTPException(status_code=404, detail=exc.msg)
 
 

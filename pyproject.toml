@@ -12,7 +12,9 @@ packages = [
 python = "^3.13"
 fastapi = "^0.115.4"
 uvicorn = "^0.32.0"
-
+python-jose = {extras = ["cryptography"], version = "^3.3.0"} # JWT 및 JWE 토큰 처리
+bcrypt = "^4.2.0" # 암호화 라이브러리
+python-multipart = "^0.0.17" # 파일 업로드 지원 라이브러리 (Form)
 
 [tool.poetry.group.dev.dependencies]
 requests = "2.31.0"
