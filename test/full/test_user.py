@@ -1,10 +1,14 @@
 import pytest
 from fastapi.testclient import TestClient
-from model.user import SignInUser, PrivateUser, PublicUser
-from main import app
+from app.model.user import SignInUser, PrivateUser, PublicUser
+from app.main import app
 
 client = TestClient(app)
 
+@pytest.fixture(autouse=True)
+def setup_database():
+    curs.execute("DELETE FROM user")
+    curs.execute("DELETE FROM xuser")
 
 @pytest.fixture
 def sample_sign_in() -> SignInUser:
